@@ -19,7 +19,7 @@ Installation
 ------------
 1. Download this repository and unzip the .zip file in your desired location.
 2. Navigate to this location using the command line.
-3. Use the command `python todolist.py` on windows or `pyhton3 todolist.py` on mac or linux.
+3. Use the command `python todolist.py` on windows or `pyhton3 todolist.py` on mac or linux to initiate the program.
 
 
 How to use
