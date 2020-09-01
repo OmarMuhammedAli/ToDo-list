@@ -25,4 +25,4 @@ Installation
 How to use
 ----------
 
-![ToDo list menu](https://imgur.com/a/qwn6Rov)
+![ToDo list menu](https://i.imgur.com/nSm8M0V.png)
