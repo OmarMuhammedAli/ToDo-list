@@ -26,3 +26,6 @@ How to use
 ----------
 
 ![ToDo list menu](https://i.imgur.com/nSm8M0V.png)
+
+As shown in the menu above, there are several obvious options to choose from when running the program.
+
