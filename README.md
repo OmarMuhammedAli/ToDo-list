@@ -25,4 +25,4 @@ Installation
 How to use
 ----------
 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of Yaktocat](https://imgur.com/a/qwn6Rov)
