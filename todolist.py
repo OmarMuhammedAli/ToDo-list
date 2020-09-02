@@ -56,10 +56,10 @@ def all_tasks():
 def add_task():
     task = input('Enter Task\n')
     string_date = input('Enter deadline on the form "YYYY-MM-DD" or "MM-DD"\n')
-    date = [int(value) for value in string_date.split('-')]  # The deadline should be YYYY-MM-DD
-    if len(date) < 3:
-        date.insert(0, datetime.today().year)  # Consider the current year as the default year 
     try:
+        date = [int(value) for value in string_date.split('-')]  # The deadline should be YYYY-MM-DD
+        if len(date) < 3:
+            date.insert(0, datetime.today().year)  # Consider the current year as the default year
         deadline = datetime(date[0], date[1], date[2])
     except:
         print('Invalid date or date format for deadline')
@@ -72,6 +72,7 @@ def add_task():
     else:
         print("The task will only be added if the specified deadline is in the future!")
         return None
+
 
 
 def missed_tasks(day):
