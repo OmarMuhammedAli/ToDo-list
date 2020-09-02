@@ -12,15 +12,23 @@ Session = sessionmaker(bind=engine)
 session = Session()  # created a session object to manage the db
 
 
+def print_rows(rows, mode=0):
+    counter = 1
+    for row in rows:
+        if not mode:
+            print(f'{counter}. {row}. ')
+        else:
+            print(f'{counter}. {row}. {row.deadline.day} {row.deadline.strftime("%b")} {row.deadline.year}')
+        counter += 1
+        
+
+
 def day_tasks(day=datetime.today()):
     rows = session.query(ToDo).filter(ToDo.deadline == day.date()).all()
     if len(rows) < 1:
         print('Nothing to do!')
     else:
-        counter = 1
-        for row in rows:
-            print(f'{counter}. {row}')
-            counter += 1
+        print_rows(rows)
 
 
 def today_tasks(day):
@@ -42,23 +50,28 @@ def all_tasks():
     if len(rows) < 1:
         print('Nothing to do!')
     else:
-        counter = 1
-        for row in rows:
-            print(f'{counter}. {row}. {row.deadline.day} {row.deadline.strftime("%b")}')
-            counter += 1
+        print_rows(rows, 1)
 
 
 def add_task():
     task = input('Enter Task\n')
-    date = [int(value) for value in input('Enter deadline on the form "YYYY-MM-DD"\n').split('-')]  # The deadline should be YYYY-MM-DD
-    deadline = datetime(date[0], date[1], date[2])
-    if deadline < datetime.today():
+    string_date = input('Enter deadline on the form "YYYY-MM-DD" or "MM-DD"\n')
+    date = [int(value) for value in string_date.split('-')]  # The deadline should be YYYY-MM-DD
+    if len(date) < 3:
+        date.insert(0, datetime.today().year)  # Consider the current year as the default year 
+    try:
+        deadline = datetime(date[0], date[1], date[2])
+    except:
+        print('Invalid date or date format for deadline')
+        return None
+    if deadline.date() >= datetime.today().date():    
+        new_row = ToDo(task=task, deadline=deadline)
+        session.add(new_row)
+        session.commit()
+        print('The task has been added!')
+    else:
         print("The task will only be added if the specified deadline is in the future!")
         return None
-    new_row = ToDo(task=task, deadline=deadline)
-    session.add(new_row)
-    session.commit()
-    print('The task has been added!')
 
 
 def missed_tasks(day):
@@ -67,10 +80,7 @@ def missed_tasks(day):
     if len(rows) < 1:
         print('Nothing is missed!')
     else:
-        counter = 1
-        for row in rows:
-            print(f'{counter}. {row}. {row.deadline.day} {row.deadline.strftime("%b")}')
-            counter += 1
+        print_rows(rows, 1)
 
 
 def delete_task():
@@ -79,10 +89,7 @@ def delete_task():
         print('Nothing to delete!')
     else:
         print('Choose the number of the task you want to delete:')
-        counter = 1
-        for row in rows:
-            print(f'{counter}. {row}. {row.deadline.day} {row.deadline.strftime("%b")}')
-            counter += 1
+        print_rows(rows, 1)
         task_id = int(input('0. Cancel\n'))
         if task_id == 0: return None
         delete_row = rows[task_id - 1]
