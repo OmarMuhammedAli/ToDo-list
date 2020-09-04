@@ -147,7 +147,7 @@ def move_deadline():
         task_id = int(input('0. Cancel\n'))
         deadline = check_deadline()
         if deadline is None: return None
-        if deadline.date() > datetime.today().date():
+        if deadline.date() >= datetime.today().date():
             row = rows[task_id - 1]
             row.deadline = deadline
             session.commit()
