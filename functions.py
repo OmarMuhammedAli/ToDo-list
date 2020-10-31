@@ -124,7 +124,11 @@ def delete_task():
     else:
         print('Choose the number of the task you want to delete:')
         print_rows(rows, 1)
-        task_id = int(input('0. Cancel\n'))
+        try:
+            task_id = int(input('0. Cancel\n'))
+        except: 
+            print('Invalid Entry')
+            return None
         if task_id == 0: return None
         delete_row = rows[task_id - 1]
         session.delete(delete_row)
@@ -141,7 +145,11 @@ def move_deadline():
     else:
         print('Choose the number of the task that you want to move its deadline')
         print_rows(rows, 1)
-        task_id = int(input('0. Cancel\n'))
+        try:
+            task_id = int(input('0. Cancel\n'))
+        except: 
+            print('Invalid Entry!')
+            return None
         if task_id == 0: return None
         deadline = check_deadline()
         if deadline is None: return None
